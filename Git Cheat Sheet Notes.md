@@ -24,3 +24,6 @@ after making changes to a file do the following:
 
 ### 	Create through CLI
 
+## 3. Pull Requests
+
+* https://www.freecodecamp.org/news/how-to-make-your-first-pull-request-on-github-3/
