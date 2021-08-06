@@ -35,6 +35,7 @@ after making changes to a file do the following:
 
 
 
+
 ## 4. Pull Requests
 
 * https://www.freecodecamp.org/news/how-to-make-your-first-pull-request-on-github-3/
@@ -54,3 +55,8 @@ after making changes to a file do the following:
 * <u>Push</u>: Uploads or sends all of your commits to the Master Repository
 * <u>Fetch</u>: Downloads all of the commits from the Master Repository to your Local Repository (Does Not Merge)
 * <u>Pull</u>: Downloads all of the commits from the Master Repository to your Local Repository adn MERGES your most recent commit
+=======
+## 3. Pull Requests
+
+* https://www.freecodecamp.org/news/how-to-make-your-first-pull-request-on-github-3/
+
