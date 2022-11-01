@@ -238,4 +238,61 @@ console.log(`Mark's weight: ${mark.weight}kg, height:${mark.height}m, BMI:${+mar
   const book = ['Ernest Hemingway', 70, 'author', years]  //book is an array with different datatypes
   ```
 
+### Basic Methods
+
+#### Add Elements
+
+* push - adds to the end of an array
+
+  ```javascript
+  const friends = ['Steve', 'Bob'];
+  friends.push('Jay');  // friends = ['Steve', 'Bob', 'Jay']
+  ```
+
+* unshift - adds to beginning of an array
+
+  ```javascript
+  const friends = ['Steve', 'Bob'];
+  friends.unshift('Jay');  // friends = ['Jay', 'Steve', 'Bob']
+  ```
+
   
+
+#### Remove Elements
+
+* pop - removes from the end of an array
+
+  ```javascript
+  const friends = ['Steve', 'Bob', 'Jay'];
+  friends.pop();  // friends = ['Steve', 'Bob']
+  ```
+
+* unshift - removes from the beginning of an array
+
+  ```javascript
+  const friends = ['Steve', 'Bob', 'Jay'];
+  friends.unshift();  // friends = ['Bob', 'Jay']
+  ```
+
+#### Index of Elements
+
+* indexOf - returns the index number of the given element
+
+  ```javascript
+  const friends = ['Steve', 'Bob', 'Jay'];
+  friends.indexOf('Bob'); // 1
+  ```
+
+#### Include
+
+* include - returns boolean if element is found
+
+  ```javascript
+  const friends = ['Steve', 'Bob', 'Jay'];
+  friends.include('Bob'); //true
+  friends.include('Peter'); //false
+  ```
+
+
+
+## 4. Intro to Objects
