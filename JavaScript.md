@@ -113,8 +113,6 @@ console.log(`Mark's weight: ${mark.weight}kg, height:${mark.height}m, BMI:${+mar
   * `===` does NOT do Type Coercion
     * `'18' === 18 //false`
 
-##### 
-
 ### Ternary Operators
 
 * ```javascript
@@ -128,7 +126,21 @@ console.log(`Mark's weight: ${mark.weight}kg, height:${mark.height}m, BMI:${+mar
 
     * If the statement preceding `?` is true that expression1, else expression 2
 
-    
+### Statements vs Expressions
+
+#### Expressions
+
+* Produces a value
+  * 1991
+  * 2007 - 1991
+  * true && 1991
+
+### Statements
+
+* Perform Actions
+  * If Statement, etc
+
+
 
 ## 2. Fundamentals - Additional
 
@@ -296,3 +308,85 @@ console.log(`Mark's weight: ${mark.weight}kg, height:${mark.height}m, BMI:${+mar
 
 
 ## 4. Intro to Objects
+
+* data structure has Key-Value pairs
+
+* example
+
+  ```javascript
+  const Jonas = {
+    firstName: 'Jonas',
+    lastName: 'Smith',
+    age: 2022 - 1991,
+    job: 'teacher',
+    friends: ['Amy', 'Bob', 'Chris']
+  };
+  ```
+
+  * there are different ways to create objects in JS.  This is the most simple, using curly braces.  This is known as Object Literal Syntax.
+
+* A noteworthy difference between Objects and Arrays is that Arrays are ordered (i.e. need to know the order of the data to access a value), whereas Objects are unordered - can access the value through the property name.
+
+### Dot vs Bracket Notation
+
+* two ways of retrieving object values
+
+#### Dot
+
+* `Jonas.firstName` 
+
+#### Bracket
+
+* `Jonas['firstName']`
+
+* The bracket notations is useful if you need to retrieve an Object's value through a variable
+
+* ```javascript
+  const Jonas = {
+    firstName: 'Jonas',
+    lastName: 'Smith',
+    age: 2022 - 1991,
+    job: 'teacher',
+    friends: ['Amy', 'Bob', 'Chris']
+  };
+  
+  const interestedIn = prompt('What do you want to know about Jonas?  Choose between firstName, lastName, age, job, friends.');
+  console.log(Jonas[interestedIn]);
+  ```
+
+### Object Methods
+
+```javascript
+const Jonas = {
+  firstName: 'Jonas',
+  lastName: 'Smith',
+  birthYear: 1984,
+  job: 'teacher',
+  friends: ['Amy', 'Bob', 'Chris'],
+
+  calcAge: function(){
+    this.age = (new Date().getFullYear()) - this.birthYear;
+    return this.age;
+  }
+};
+
+console.log(Jonas.calcAge());
+```
+
+
+
+## 5. Looping
+
+### Continue and Break
+
+`continue` keyword breaks from one loop iteration (skips over)
+
+```javascript
+for (let i = 0; i < JonasArray.length; i++)
+{
+  if (typeof JonasArray[i] !== 'string') continue;  //array element that's not a string gets skipped
+  console.log(JonasArray[i]);
+}
+```
+
+`break` keyword breaks out of entire loop (exits loop)
