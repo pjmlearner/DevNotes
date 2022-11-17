@@ -390,3 +390,140 @@ for (let i = 0; i < JonasArray.length; i++)
 ```
 
 `break` keyword breaks out of entire loop (exits loop)
+
+
+
+### Object, Function, and Loop Example
+
+```javascript
+const dice = {
+  roll: function () {
+    this.die1 = this.rollDie();
+    this.die2 = this.rollDie();
+    this.rollNumber = this.die1 + this.die2;
+  },
+
+  rollDie: function() {
+    return Math.ceil(Math.random() * 6);
+  },
+};
+
+function checkWinningNumbers(diceNumber){
+  if (diceNumber == 7 || diceNumber == 11) {
+    console.log(`You rolled a ${dice.rollNumber}. You win.`);
+    return true;
+  } else {
+    console.log(`You rolled a ${dice.rollNumber}`);
+    return false;
+  }
+}
+
+dice.roll();
+while (!checkWinningNumbers(dice.rollNumber)) {
+    dice.roll();
+};
+```
+
+
+
+## 6. Developer Skills and Editor Setup
+
+### Prettier
+
+* is an extension to VSCode
+
+* formats JS automatically.  Can customize and configuration
+
+### Snippets
+
+* Snippets are code templates.  Can create a prefix to call a function that's been into a template such as console.log
+
+  ```javascript
+  	"Print to console": {
+  		"scope": "javascript,typescript",
+  		"prefix": "cl",
+  		"body": [
+  			"console.log();",
+  		],
+  		"description": "Log output to console"
+  	}
+  ```
+
+  
+
+* Global Command Palette > Configure User Snippets > New Global Snippets File
+
+### Live Server
+
+* tool that helps automatically reload your web page in the browser
+* Can be installed two ways
+  * extensions
+  * through node.js npm
+    * https://www.npmjs.com/package/live-server
+
+### Debugging
+
+* use Sources tab (Chrome) to put break points
+
+### Problem Solving
+
+* Steps
+  * Ask the right questions
+  * Divide and Conquer - break problem into smaller problems
+  * Research - Google, StackOverflow, MDN (mozilla developer network)
+  * Use Pseudo-Code
+  
+  
+
+## 7. JavaScript in the Browser
+
+### Selecting an Element in JS
+
+* ```javascript
+  document.querySelector('.message');  //id
+  document.querySelector('#message');  //class
+  ```
+
+### DOM (Document Object Model)
+
+* structured representation of HTML documents.  Allows JS to access HTML Elements and styles to manipulate them
+* is NOT part of JavaScript.  DOM Methods and properties are WEB APIs, but can be interacted with JavaScript
+
+#### DOM Tree Structure
+
+![image-20221114135635460](C:\Users\pjmle\OneDrive\Documents\Projects\DevNotes\image-20221114135635460.png)
+
+* Document
+  * special object that is the entry point to the DOM `document.querySelector()`
+
+#### Dom Manipulation
+
+* interact with the webpage
+
+* ```javascript
+  console.log(document.querySelector('.message').textContent);  //'Start guessing...'
+  console.log(document.querySelector('.message').textContent = 'Test1');  //'Test1'
+  console.log(document.querySelector('.score').value = 'Test1');  //'Test1'
+  ```
+
+  * set the .message class element text to 'Test1'
+  * `.value` = access value for an input field
+
+##### Handle Click Events
+
+* Event - something that happens on the page
+
+```javascript
+document.querySelector('.check').addEventListener('click', function(){
+    const guess = Number(document.querySelector('.guess').value)
+    console.log(guess);
+    if (!guess) {
+        document.querySelector('.message').textContent = 'no number';
+    }
+})
+```
+
+* `addEventListener` method used to handle events
+  * parameter 1 = event name => 'click'
+  * parameter 2 = function
+    * what occurs when the event is fired
