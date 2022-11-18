@@ -491,7 +491,7 @@ while (!checkWinningNumbers(dice.rollNumber)) {
 
 #### DOM Tree Structure
 
-![image-20221114135635460](C:\Users\pjmle\OneDrive\Documents\Projects\DevNotes\image-20221114135635460.png)
+![image-20221114135635460](C:\Users\pjmlearner\OneDrive\Documents\Projects\DevNotes\image-20221114135635460.png)
 
 * Document
   * special object that is the entry point to the DOM `document.querySelector()`
@@ -523,7 +523,173 @@ document.querySelector('.check').addEventListener('click', function(){
 })
 ```
 
-* `addEventListener` method used to handle events
-  * parameter 1 = event name => 'click'
-  * parameter 2 = function
-    * what occurs when the event is fired
+###### `addEventListener` 
+
+* method used to handle events
+
+* parameter 1 = event name => 'click'
+
+* parameter 2 = function (no name)
+  
+  * what occurs when the event is fired
+  
+* a function expression can be used for the function parameter, but putting "()" after the function will call it immediately.  Just use the variable name for the function
+
+  ```javascript
+  btnCloseModal.addEventListener('click', closeModal);  // calls function when clicked
+  btnCloseModal.addEventListener('click', closeModal());  // calls function immediately
+  
+  ```
+
+  * or use ==bind== to pass arguments to a function but still be called when clicked
+
+    ```javascript
+    btnShowModalAll[i].addEventListener('click', displayModal.bind(this, false)); //or use bind to pass arguments on click instead of immediately
+    ```
+
+    
+
+### Modal Window
+
+#### NodeList
+
+* `document.querySelectorAll()` returns a NodeList (array)
+  * Helpful when there are multiple elements under a class and you need to select specific ones or iterate through them
+
+```javascript
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+const btnCloseModal = document.querySelector('.close-modal');
+/*
+HTML
+    <button class="show-modal">Show modal 1</button>
+    <button class="show-modal">Show modal 2</button>
+    <button class="show-modal">Show modal 3</button>
+CSS
+.show-modal {
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 1.75rem 3.5rem;
+  margin: 5rem 2rem;
+  border: none;
+  background-color: #fff;
+  color: #444;
+  border-radius: 10rem;
+  cursor: pointer;
+}
+*/    
+const btnShowModal = document.querySelector('.show-modal');  //limitation of querySelector, if there are multiple elements with same class only the first one is used
+console.log(btnShowModal);  //only displays first one in console
+
+const btnShowModalAll = document.querySelectorAll('.show-modal');  //returns a NodeList (similar to an array)
+console.log(btnShowModalAll);
+
+for(let i = 0; i < btnShowModalAll.length; i++)
+    console.log(btnShowModalAll[i].textContent);
+```
+
+### Classes
+
+* adding and removing classes is the main way to change styles on websites
+
+  * This is because a class is way to aggregate many styles together
+  * The class is defined in CSS and then used in JS to manipulate
+
+  ```css
+  /* CLASSES TO MAKE MODAL WORK */
+  .hidden {
+    display: none;
+  }
+  
+  .modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+  
+    background-color: white;
+    padding: 6rem;
+    border-radius: 5px;
+    box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+    z-index: 10;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 5;
+  }
+  ```
+
+  ```html
+      <div class="modal hidden">
+        <button class="close-modal">&times;</button>
+        <h1>I'm a modal window 😍</h1>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+          commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+          velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+          occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+          mollit anim id est laborum.
+        </p>
+      </div>
+      <div class="overlay hidden"></div>
+  ```
+
+  ```javascript
+  const modal = document.querySelector('.modal');
+  const overlay = document.querySelector('.overlay');
+  const btnCloseModal = document.querySelector('.close-modal');
+  
+  function displayModal(toggle){
+      if (toggle){
+          modal.classList.remove('hidden');  //removes hidden class from modal class <div class="modal hidden"> => <div class="modal">
+          overlay.classList.remove('hidden'); //removes hidden class from overlay class <div class="overlay hidden"> => <div class="modal">
+      } else {
+          modal.classList.add('hidden');
+          overlay.classList.add('hidden');        
+      }
+  }
+  
+  for(let i = 0; i < btnShowModalAll.length; i++){
+      btnShowModalAll[i].addEventListener('click', function(){
+          displayModal(true);
+      });
+  
+  btnCloseModal.addEventListener('click', function(){
+      displayModal(false);
+  });
+  
+  overlay.addEventListener('click', function(){
+      displayModal(false);
+  });
+  }
+  ```
+
+#### classList
+
+* Allows for manipulation of element's class content attribute as a set of whitespace-separated tokens through a DOMTokenList object.
+
+### Handling "Esc" Keypress Event
+
+* call the event's properties by supplying a variable argument in place of the event
+
+  ```javascript
+  document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape'  && !modal.classList.contains('hidden')){  //e.key - access to the key property through e variable
+          closeModal();
+      }
+  })
+  
+  ```
+
+  
+
