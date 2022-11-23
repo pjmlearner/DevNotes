@@ -186,6 +186,119 @@ console.log(`Mark's weight: ${mark.weight}kg, height:${mark.height}m, BMI:${+mar
 
 #### Arrow Functions
 
+* Quick Understanding:
+
+  ```javascript
+  //arrow function to return age with birthYear as an argument
+  const age = birthYear => 2022 - birthYear;
+  console.log(age(1984));
+  
+  //arrow function to return age with currentYear and birthYear as an argument
+  const age2 = (currentYear, birthYear) => currentYear - birthYear;
+  console.log(age2(2022, 1984));
+  
+  //arrow function with no arguments that return an age
+  let x = 1984
+  const age3 = () => 2022 - x;
+  console.log(age3());
+  
+  //arrow function to return age with statements
+  const age4 = birthYear => {
+      let currentYear = new Date().getFullYear();
+      return currentYear - birthYear;
+  }
+  console.log(age4(1984));
+  ```
+
+  
+
+* FROM MDN (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+
+  * limitations:
+
+    * Arrow functions don't have their own bindings to this, arguments, or super, and should not be used as methods.
+    * Arrow functions cannot be used as constructors. Calling them with new throws a TypeError. They also don't have access to the new.target keyword.
+    * Arrow functions cannot use yield within their body and cannot be created as generator functions.
+
+  * syntax:
+
+    ```javascript
+    param => expression
+    
+    (param) => expression
+    
+    (param1, paramN) => expression
+    
+    param => {
+      statements
+    }
+    
+    (param1, paramN) => {
+      statements
+    }
+    ```
+
+    * Examples:
+
+      ```javascript
+      // Traditional anonymous function
+      (function (a) {
+        return a + 100;
+      });
+      
+      // 1. Remove the word "function" and place arrow between the argument and opening body bracket
+      (a) => {
+        return a + 100;
+      };
+      
+      // 2. Remove the body braces and word "return" — the return is implied.
+      (a) => a + 100;
+      
+      // 3. Remove the parameter parentheses
+      a => a + 100;
+      ```
+
+      * In the example above, both the parentheses around the parameter and the braces around the function body may be omitted. However, they can only be omitted in certain cases.
+
+      * The parentheses can only be omitted if the function has a single simple parameter. If it has multiple parameters, no parameters, or default, destructured, or rest parameters, the parentheses around the parameter list are required.
+
+        ```javascript
+        // Traditional anonymous function
+        (function (a, b) {
+            return a + b + 100;
+        });
+        
+        // Arrow function
+        (a, b) => a + b + 100;
+        
+        const a = 4;
+        const b = 2;
+        
+        // Traditional anonymous function (no parameters)
+        (function() {
+        return a + b + 100;
+        });
+        
+        // Arrow function (no arguments)
+        () => a + b + 100;
+        ```
+
+        
+
+      * Arrow functions are always unnamed. If the arrow function needs to call itself, use a named function expression instead. You can also assign the arrow function to a variable so it has a name.
+
+        ```javascript
+        // Traditional Function
+        function bob(a) {
+          return a + 100;
+        }
+        
+        // Arrow Function
+        const bob2 = (a) => a + 100;
+        ```
+
+        
+
 * is a shorthand way of writing a Function Expression
 
   ```javascript
