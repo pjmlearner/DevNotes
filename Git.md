@@ -28,8 +28,8 @@
 
 7. Push Changes - `git push [git repo url address]`
 
+8. Clone - `git clone [git repo url address]`
+
 ### Pull new files from Repo
 
 1. Pull -`git pull [git repo url address]`
-
-test1
