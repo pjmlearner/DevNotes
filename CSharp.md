@@ -29,8 +29,6 @@ CLS
 
 * ==console/terminal/shell== - a command-line environment
 
-  
-
 ```terminal
 dotnet new console
 ```
@@ -60,6 +58,8 @@ no notes
     * The path for which the DLL is placed:
       * \bin - stands for binary
       * \debug - because this is a debug build of the application
+
+
 
 #### NuGet
 
@@ -126,6 +126,20 @@ We can further revise the code using ==string interpolation==, using <u>an expre
 
 `{args[0]}` - uses curly brackets for the expression
 
+#### ==Start from Scratch==
+
+When creating a new C# application in VS Code
+
+1. Create a folder for your project
+2. Run commands
+   1. `dotnet new console`
+   2. `dotnet restore`
+   3. `dotnet run`
+3. To Debug, need to add launch.json file
+   1. try to debug > launch through .Net Core
+   2. launch.json file will be created
+   3. ensure to have the "program" path listed and replace placeholders
+
 ### Debugging C# Application
 
 ![image-20200819122026620](C:\Users\PJMLEARNER\AppData\Roaming\Typora\typora-user-images\image-20200819122026620.png)
@@ -187,7 +201,7 @@ to be able to use an array, it must be declared AND created/instantiated
 
 an example of just declaring an array (Which will fail because it hasn't been created)
 
-```
+```c#
     class Program
     {
         static void Main(string[] args)
@@ -441,12 +455,13 @@ namespace GradeBook
 * `this` will reference the parameter/variable as defined within its constructor/method
 * where as just `name` references the field property of the class and not the value of the constructor parameter
 
-### Static Members
+### ==Static Members==
 
 * the `static` keyword makes it so that the members of a class (the method or fields) cannot be instantiated
   * e.g. if a field of a class was static, when you instantiate an object of that class, that static field cannot be called as it only lives within the class
 * `static` members can only be accessed through the class itself.
-* more often than note you would not use the static keyword as it negates the benefits of Object Orientation
+* more often than not you would not use the static keyword as it negates the benefits of Object Orientation
+* Helpful: https://www.codeproject.com/Articles/15269/Static-Keyword-Demystified
 
 
 
