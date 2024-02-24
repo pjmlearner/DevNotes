@@ -1,4 +1,4 @@
-# Django
+# 1. Django
 
 ## What is Django
 
@@ -116,7 +116,7 @@ django-admin startproject <projectname>
 
 
 
-# Django App
+# 2. Django App
 
 ## The Concept of a Django App
 
@@ -195,7 +195,7 @@ django-admin startapp <name-of-app>
 
 
 
-# URLs, Views, Templates
+# 3. URLs, Views, Templates
 
 ## What are URLs and Views?
 
@@ -436,6 +436,272 @@ clientList = [
 * they are defined as {% %} and allows us to write python-styled logic
 * Examples
   * {% csrf_token %} - needed in a template when working with a database
+  
   * {% extends %} - needed for template inheritance
+  
   * {% if %} ... {% end if %}
+  
+    ```html
+    <html>
+    {% block content %}
+        <h1>This the home page.</h1>
+        <p>Welcome to my website!</p>
+        {% if first_name == 'John' %}
+            <h5>Hello my name is {{first_name}} {{last_name}}</h5>
+        {% else %}
+            <h5>Access Denied</h5>
+        {% endif %}
+    {% endblock %}
+    
+    </html>
+    ```
+  
   * {% for %} ... {% endfor %}
+
+### Dot Notation
+
+* denoted by "."
+
+* lookups
+
+  * `{{ dictionary.key }}`
+  * `{{ object.attribute }}`
+  * `{{ list.2 }}`
+
+* example of For Loop and Dot Notation
+
+  * views.py - specific function within the file
+
+    ```python
+    def home(request):
+        clientList = [
+            {
+                'id' : '1',
+                'name' : 'John Doe',
+                'occupation' : 'Electrical Engineer'
+            },
+            {
+                'id' : '2',
+                'name' : 'Kate Smith',
+                'occupation' : 'Lawyer'
+            },
+        ]
+        context = {'clientList' : clientList}
+        return render(request, 'crm/index.html', context)
+    ```
+
+  * index.html (corresponding template)
+
+    ```html
+    {% extends 'crm/base.html' %}
+    
+    <html>
+    {% block content %}
+        <h1>This the home page.</h1>
+        <p>Welcome to my website!</p>
+        {% for client in clientList %}
+            <h5>Hello my name is {{client.name}} and I am a(n) {{client.occupation}}</h5>
+        {% endfor %}
+    {% endblock %}
+    
+    </html>
+    ```
+
+    
+
+# 4. Databases
+
+## Database Configuration for Django App
+
+### settings.py
+
+* in settings.py in the project folder
+
+  ```python
+  DATABASES = {
+      'default': {
+          'ENGINE': 'django.db.backends.sqlite3',
+          'NAME': BASE_DIR / 'db.sqlite3',
+      }
+  }
+  ```
+
+  
+
+## Django Admin Panel
+
+* `http://127.0.0.1:8000/admin`
+
+* you'll need to create a super user by going to the parent project folder in command prompt and using the command:
+  * `python manage.py createsuperuser`
+
+
+
+## Django Model
+
+* a built-in feature used by Django to create database tables along with their fields, and additional constraints that need to be included
+* they are essentially Python classes that represent database tables
+* they are defined in models.py
+
+### Steps to Create Model and Push to Database
+
+#### 1. Add Model(s) to model.py
+
+```python
+from django.db import models
+
+class Task(models.Model):
+    title = models.CharField(max_length=50)
+    description = models.TextField(max_length=10000)
+    created = models.DateTimeField(auto_now_add=True)
+```
+
+* Note that we name the model singular ("Task", not the plural "Tasks").  This is because Django will create the table from our model and pluralize it (e.g. Tasks).
+
+#### 2. Create the Migration from the Model
+
+* after adding/updating a model you need to run the command in the parent project folder:
+
+  * `python manage.p makemigrations`
+
+* after running the command the following happens:
+
+  * you will see a command response
+
+    ```
+    Migrations for 'crm':
+      crm\migrations\0001_initial.py
+        - Create model Task
+    ```
+
+    * since the model was created within your Django App (crm in this case), the migration file (0001_initial.py) will be created in the App's migrations folder
+
+  * the migration file will look similar to this:
+
+    ```python
+    from django.db import migrations, models
+    
+    
+    class Migration(migrations.Migration):
+    
+        initial = True
+    
+        dependencies = [
+        ]
+    
+        operations = [
+            migrations.CreateModel(
+                name='Task',
+                fields=[
+                    ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                    ('title', models.CharField(max_length=50)),
+                    ('description', models.TextField(max_length=10000)),
+                    ('created', models.DateTimeField(auto_now_add=True)),
+                ],
+            ),
+        ]
+    ```
+
+    
+
+    * Note Django will automatically create the id field, so you do not need to include an id field in your model
+
+#### 3. Migrate Model to Database
+
+* run the command in the parent project folder:
+
+  * `python manage.py migrate`
+
+* command response:
+
+  * ```
+    Operations to perform:
+      Apply all migrations: admin, auth, contenttypes, crm, sessions
+    Running migrations:
+      Applying crm.0001_initial... OK
+    ```
+
+
+
+### Registering Our Model with Django Admin
+
+#### Steps to Register Model for Django Admin
+
+##### 1. Add Model to Admin.py
+
+```python
+from .models import Task
+
+admin.site.register(Task)
+```
+
+##### 2. Run the server
+
+`python manage.py runserver`
+
+##### 3. Log into admin and see the model
+
+![image-20240221113749605](C:\Git\Github\DevNotes\Django\image-20240221113749605.png)
+
+* note the model is created with plural name (Tasks) under the app name (CRM)
+
+
+
+### Link Two Models With A Foreign Key
+
+#### Steps to Link Two Models with Foreign Key
+
+##### 1. models.py - add new model with foreign key
+
+```python
+class Review(models.Model):
+    reviewer_name = models.CharField(max_length=65)
+    review_title = models.CharField(max_length=100)
+    task = models.ForeignKey(Task, on_delete = models.CASCADE) #no needto add id to task (e.g. task_id), Django will automate this
+```
+
+##### 2. Repeat
+
+1. Steps to Create Model and Push to Database
+2. Registering Our Model with Django Admin
+
+![image-20240221120619976](C:\Git\Github\DevNotes\Django\image-20240221120619976.png)
+
+
+
+### Query Database Using Model
+
+#### Add Model to View
+
+* import model
+
+  * ```python
+    from .models import ModelName
+    ```
+
+    
+
+* get data
+
+  * ```python
+    queryDataAll = ModelName.objects.all()
+    def home(request):
+        queryDataAll = Task.objects.all()
+        #queryDataSingle = ModelNAme.objects.get(attribute='value') #another way to query data
+        context = {'allTasks' : queryDataAll}
+        return render(request, 'crm/index.html', context)
+    ```
+
+#### Use Data in Template
+
+```
+    {% for task in allTasks %}
+        <h5>Task: {{task.title}}.</h5>
+    {% endfor %}
+```
+
+
+
+# 5. CRUD operations and Model Forms
+
+* a Model Form is a class that is used to convert a Django Model into a Django Form
